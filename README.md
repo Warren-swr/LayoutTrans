@@ -1,5 +1,7 @@
 # LayoutTransformer
 
+Clone from another repository for compare
+
 [arXiv](https://arxiv.org/abs/2006.14615) | [BibTeX](#bibtex) | [Project Page](https://kampta.github.io/layout)
 
 This repo contains code for single GPU training of LayoutTransformer from
