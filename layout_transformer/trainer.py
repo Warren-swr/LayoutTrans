@@ -5,7 +5,7 @@ so nothing in this file really has anything to do with GPT specifically.
 import os
 import math
 import logging
-import wandb
+# import wandb
 
 from tqdm import tqdm
 import numpy as np
@@ -53,9 +53,9 @@ class Trainer:
         self.iters = 0
         self.fixed_x = None
         self.fixed_y = None
-        print("Using wandb")
-        wandb.init(project='LayoutTransformer', name=args.exp)
-        wandb.config.update(args)
+        # print("Using wandb")
+        # wandb.init(project='LayoutTransformer', name=args.exp)
+        # wandb.config.update(args)
 
         # take over whatever gpus are on the system
         self.device = 'cpu'
@@ -128,16 +128,16 @@ class Trainer:
                         lr = config.learning_rate
 
                     # report progress
-                    wandb.log({
-                        'train loss': loss.item(),
-                        'lr': lr, 'epoch': epoch+1
-                    }, step=self.iters)
-                    pbar.set_description(f"epoch {epoch+1} iter {it}: train loss {loss.item():.5f}. lr {lr:e}")
+                    # wandb.log({
+                    #     'train loss': loss.item(),
+                    #     'lr': lr, 'epoch': epoch+1
+                    # }, step=self.iters)
+                    # pbar.set_description(f"epoch {epoch+1} iter {it}: train loss {loss.item():.5f}. lr {lr:e}")
 
             if not is_train:
                 test_loss = float(np.mean(losses))
                 logger.info("test loss: %f", test_loss)
-                wandb.log({'test loss': test_loss}, step=self.iters)
+                # wandb.log({'test loss': test_loss}, step=self.iters)
                 return test_loss
 
         best_loss = float('inf')
@@ -190,13 +190,13 @@ class Trainer:
                 #     layout = self.train_dataset.render(layout)
                 #     layout.save(os.path.join(self.config.samples_dir, f'sample_det_{epoch:02d}_{i:02d}.png'))
 
-                wandb.log({
-                    "input_layouts": [wandb.Image(pil, caption=f'input_{epoch:02d}_{i:02d}.png')
-                                      for i, pil in enumerate(input_layouts)],
-                    "recon_layouts": [wandb.Image(pil, caption=f'recon_{epoch:02d}_{i:02d}.png')
-                                      for i, pil in enumerate(recon_layouts)],
-                    "sample_random_layouts": [wandb.Image(pil, caption=f'sample_random_{epoch:02d}_{i:02d}.png')
-                                              for i, pil in enumerate(sample_random_layouts)],
-                    "sample_det_layouts": [wandb.Image(pil, caption=f'sample_det_{epoch:02d}_{i:02d}.png')
-                                           for i, pil in enumerate(sample_det_layouts)],
-                }, step=self.iters)
+                # wandb.log({
+                #     "input_layouts": [wandb.Image(pil, caption=f'input_{epoch:02d}_{i:02d}.png')
+                #                       for i, pil in enumerate(input_layouts)],
+                #     "recon_layouts": [wandb.Image(pil, caption=f'recon_{epoch:02d}_{i:02d}.png')
+                #                       for i, pil in enumerate(recon_layouts)],
+                #     "sample_random_layouts": [wandb.Image(pil, caption=f'sample_random_{epoch:02d}_{i:02d}.png')
+                #                               for i, pil in enumerate(sample_random_layouts)],
+                #     "sample_det_layouts": [wandb.Image(pil, caption=f'sample_det_{epoch:02d}_{i:02d}.png')
+                #                            for i, pil in enumerate(sample_det_layouts)],
+                # }, step=self.iters)
