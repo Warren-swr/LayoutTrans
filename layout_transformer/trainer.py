@@ -143,49 +143,52 @@ class Trainer:
         best_loss = float('inf')
         for epoch in range(config.max_epochs):
             run_epoch('train')
-            if self.test_dataset is not None:
-                with torch.no_grad():
-                    test_loss = run_epoch('test')
+            # if self.test_dataset is not None:
+            #     with torch.no_grad():
+            #         test_loss = run_epoch('test')
 
             # supports early stopping based on the test loss, or just save always if no test set is provided
-            good_model = self.test_dataset is None or test_loss < best_loss
-            if self.config.ckpt_dir is not None and good_model:
-                best_loss = test_loss
+            # good_model = self.test_dataset is None or test_loss < best_loss
+            # if self.config.ckpt_dir is not None and good_model:
+            #     best_loss = test_loss
+            #     self.save_checkpoint()
+            
+            if self.config.ckpt_dir is not None:
                 self.save_checkpoint()
 
             # sample from the model
-            if self.config.samples_dir is not None and (epoch+1) % self.config.sample_every == 0:
+            # if self.config.samples_dir is not None and (epoch+1) % self.config.sample_every == 0:
                 # import ipdb; ipdb.set_trace()
                 # inputs
-                layouts = self.fixed_x.detach().cpu().numpy()
-                input_layouts = [self.train_dataset.render(layout) for layout in layouts]
+                # layouts = self.fixed_x.detach().cpu().numpy()
+                # input_layouts = [self.train_dataset.render(layout) for layout in layouts]
                 # for i, layout in enumerate(layouts):
                 #     layout = self.train_dataset.render(layout)
                 #     layout.save(os.path.join(self.config.samples_dir, f'input_{epoch:02d}_{i:02d}.png'))
 
                 # reconstruction
-                x_cond = self.fixed_x.to(self.device)
-                logits, _ = model(x_cond)
-                probs = F.softmax(logits, dim=-1)
-                _, y = torch.topk(probs, k=1, dim=-1)
-                layouts = torch.cat((x_cond[:, :1], y[:, :, 0]), dim=1).detach().cpu().numpy()
-                recon_layouts = [self.train_dataset.render(layout) for layout in layouts]
+                # x_cond = self.fixed_x.to(self.device)
+                # logits, _ = model(x_cond)
+                # probs = F.softmax(logits, dim=-1)
+                # _, y = torch.topk(probs, k=1, dim=-1)
+                # layouts = torch.cat((x_cond[:, :1], y[:, :, 0]), dim=1).detach().cpu().numpy()
+                # recon_layouts = [self.train_dataset.render(layout) for layout in layouts]
                 # for i, layout in enumerate(layouts):
                 #     layout = self.train_dataset.render(layout)
                 #     layout.save(os.path.join(self.config.samples_dir, f'recon_{epoch:02d}_{i:02d}.png'))
 
                 # samples - random
-                layouts = sample(model, x_cond[:, :6], steps=self.train_dataset.max_length,
-                                 temperature=1.0, sample=True, top_k=5).detach().cpu().numpy()
-                sample_random_layouts = [self.train_dataset.render(layout) for layout in layouts]
+                # layouts = sample(model, x_cond[:, :6], steps=self.train_dataset.max_length,
+                #                  temperature=1.0, sample=True, top_k=5).detach().cpu().numpy()
+                # sample_random_layouts = [self.train_dataset.render(layout) for layout in layouts]
                 # for i, layout in enumerate(layouts):
                 #     layout = self.train_dataset.render(layout)
                 #     layout.save(os.path.join(self.config.samples_dir, f'sample_random_{epoch:02d}_{i:02d}.png'))
 
                 # samples - deterministic
-                layouts = sample(model, x_cond[:, :6], steps=self.train_dataset.max_length,
-                                 temperature=1.0, sample=False, top_k=None).detach().cpu().numpy()
-                sample_det_layouts = [self.train_dataset.render(layout) for layout in layouts]
+                # layouts = sample(model, x_cond[:, :6], steps=self.train_dataset.max_length,
+                #                  temperature=1.0, sample=False, top_k=None).detach().cpu().numpy()
+                # sample_det_layouts = [self.train_dataset.render(layout) for layout in layouts]
                 # for i, layout in enumerate(layouts):
                 #     layout = self.train_dataset.render(layout)
                 #     layout.save(os.path.join(self.config.samples_dir, f'sample_det_{epoch:02d}_{i:02d}.png'))

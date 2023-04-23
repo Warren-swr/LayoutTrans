@@ -17,8 +17,9 @@ if __name__ == "__main__":
     parser.add_argument("--threshold", type=int, default=16, help="threshold for grayscale values")
 
     # COCO/PubLayNet options
-    parser.add_argument("--train_json", default="/home/weiran/Projects/RvNN-Layout/data/magazine-trans/magazine_0417_0.3K/train.json", help="/path/to/train/json")
-    parser.add_argument("--val_json", default="/home/weiran/Projects/RvNN-Layout/data/magazine-trans/magazine_0417_0.3K/test.json", help="/path/to/val/json")
+    data_path = "/home/weiran/Project/RvNN-Layout/data/publay-trans/publay-0.3K"
+    parser.add_argument("--train_json", default=data_path + "/train.json", help="/path/to/train/json")
+    parser.add_argument("--val_json", default=data_path + "/test.json", help="/path/to/val/json")
 
     # Layout options
     parser.add_argument("--max_length", type=int, default=128, help="batch size")
@@ -31,14 +32,14 @@ if __name__ == "__main__":
     parser.add_argument("--epochs", type=int, default=100, help="number of epochs")
     parser.add_argument("--batch_size", type=int, default=64, help="batch size")
     parser.add_argument("--lr", type=float, default=4.5e-06, help="learning rate")
-    parser.add_argument('--n_layer', default=4, type=int)
+    parser.add_argument('--n_layer', default=6, type=int)
     parser.add_argument('--n_embd', default=512, type=int)
     parser.add_argument('--n_head', default=8, type=int)
     # parser.add_argument('--evaluate', action='store_true', help="evaluate only")
     parser.add_argument('--lr_decay', action='store_true', help="use learning rate decay")
     parser.add_argument('--warmup_iters', type=int, default=0, help="linear lr warmup iters")
     parser.add_argument('--final_iters', type=int, default=0, help="cosine lr final iters")
-    parser.add_argument('--sample_every', type=int, default=50, help="sample every epoch")
+    parser.add_argument('--sample_every', type=int, default=100, help="sample every epoch")
     os.environ["CUDA_VISIBLE_DEVICES"] = "3"
 
     args = parser.parse_args()
