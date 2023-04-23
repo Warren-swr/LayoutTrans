@@ -17,8 +17,9 @@ if __name__ == "__main__":
     parser.add_argument("--threshold", type=int, default=16, help="threshold for grayscale values")
 
     # COCO/PubLayNet options
-    parser.add_argument("--train_json", default="/home/weiran/Projects/RvNN-Layout/data/magazine-trans/magazine_0417_1K/train.json", help="/path/to/train/json")
-    parser.add_argument("--val_json", default="/home/weiran/Projects/RvNN-Layout/data/magazine-trans/magazine_0417_1K/test.json", help="/path/to/val/json")
+    data_path = "/home/weiran/Project/RvNN-Layout/data/publay-trans/publay-0.3K"
+    parser.add_argument("--train_json", default=data_path + "/train.json", help="/path/to/train/json")
+    parser.add_argument("--val_json", default=data_path + "/test.json", help="/path/to/val/json")
 
     # Layout options
     parser.add_argument("--max_length", type=int, default=128, help="batch size")
