@@ -9,7 +9,8 @@ from utils import set_seed
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser('Layout Transformer')
-    parser.add_argument("--exp", default="magazine_1K", help="experiment name")
+    exp = "magazine_1K"
+    parser.add_argument("--exp", default=exp, help="experiment name")
     parser.add_argument("--log_dir", default="./logs", help="/path/to/logs/dir")
 
     # MNIST options
@@ -17,7 +18,7 @@ if __name__ == "__main__":
     parser.add_argument("--threshold", type=int, default=16, help="threshold for grayscale values")
 
     # COCO/PubLayNet options
-    data_path = "/home/weiran/Project/RvNN-Layout/data/publay-trans/publay-0.3K"
+    data_path = "/home/weiran/Project/RvNN-Layout/data/publay-trans/" + exp
     parser.add_argument("--train_json", default=data_path + "/train.json", help="/path/to/train/json")
     parser.add_argument("--val_json", default=data_path + "/test.json", help="/path/to/val/json")
 
