@@ -10,8 +10,9 @@ from utils import set_seed
 if __name__ == "__main__":
     parser = argparse.ArgumentParser('Layout Transformer')
     
-    exp = "publay-1W"
-    os.environ["CUDA_VISIBLE_DEVICES"] = "3"
+    exp = "magazine_2.5K"
+    os.environ["CUDA_VISIBLE_DEVICES"] = "1"
+    data_path = "/home/weiran/Projects/RvNN-Layout/data/magazine-trans-new/" + exp
     
     parser.add_argument("--exp", default=exp, help="experiment name")
     parser.add_argument("--log_dir", default="./logs", help="/path/to/logs/dir")
@@ -21,7 +22,7 @@ if __name__ == "__main__":
     parser.add_argument("--threshold", type=int, default=16, help="threshold for grayscale values")
 
     # COCO/PubLayNet options
-    data_path = "/home/weiran/Projects/RvNN-Layout/data/publay-trans/" + exp
+    
     parser.add_argument("--train_json", default=data_path + "/train.json", help="/path/to/train/json")
     parser.add_argument("--val_json", default=data_path + "/test.json", help="/path/to/val/json")
 
@@ -33,7 +34,7 @@ if __name__ == "__main__":
 
     # Architecture/training options
     parser.add_argument("--seed", type=int, default=42, help="random seed")
-    parser.add_argument("--epochs", type=int, default=200, help="number of epochs")
+    parser.add_argument("--epochs", type=int, default=80, help="number of epochs")
     parser.add_argument("--batch_size", type=int, default=64, help="batch size")
     parser.add_argument("--lr", type=float, default=4.5e-06, help="learning rate")
     parser.add_argument('--n_layer', default=6, type=int)
@@ -43,7 +44,7 @@ if __name__ == "__main__":
     parser.add_argument('--lr_decay', action='store_true', help="use learning rate decay")
     parser.add_argument('--warmup_iters', type=int, default=0, help="linear lr warmup iters")
     parser.add_argument('--final_iters', type=int, default=0, help="cosine lr final iters")
-    parser.add_argument('--sample_every', type=int, default=100, help="sample every epoch")
+    parser.add_argument('--sample_every', type=int, default=50, help="sample every epoch")
     
 
     args = parser.parse_args()
