@@ -9,7 +9,10 @@ from utils import set_seed
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser('Layout Transformer')
-    exp = "magazine_1K"
+    
+    exp = "publay-1W"
+    os.environ["CUDA_VISIBLE_DEVICES"] = "3"
+    
     parser.add_argument("--exp", default=exp, help="experiment name")
     parser.add_argument("--log_dir", default="./logs", help="/path/to/logs/dir")
 
@@ -18,7 +21,7 @@ if __name__ == "__main__":
     parser.add_argument("--threshold", type=int, default=16, help="threshold for grayscale values")
 
     # COCO/PubLayNet options
-    data_path = "/home/weiran/Project/RvNN-Layout/data/publay-trans/" + exp
+    data_path = "/home/weiran/Projects/RvNN-Layout/data/publay-trans/" + exp
     parser.add_argument("--train_json", default=data_path + "/train.json", help="/path/to/train/json")
     parser.add_argument("--val_json", default=data_path + "/test.json", help="/path/to/val/json")
 
@@ -40,8 +43,8 @@ if __name__ == "__main__":
     parser.add_argument('--lr_decay', action='store_true', help="use learning rate decay")
     parser.add_argument('--warmup_iters', type=int, default=0, help="linear lr warmup iters")
     parser.add_argument('--final_iters', type=int, default=0, help="cosine lr final iters")
-    parser.add_argument('--sample_every', type=int, default=50, help="sample every epoch")
-    os.environ["CUDA_VISIBLE_DEVICES"] = "2"
+    parser.add_argument('--sample_every', type=int, default=100, help="sample every epoch")
+    
 
     args = parser.parse_args()
 
